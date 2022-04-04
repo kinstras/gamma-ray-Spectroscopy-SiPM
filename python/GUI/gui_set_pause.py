@@ -236,7 +236,7 @@ class Gui:
             #print("Total counts: ",total_counts)
             cps_list = array[0].tolist()  #metatrepo to array se lista
             energy_list = np.arange(0, 5, 1)
-
+            #energy_list = np.arange(0, 1401.856, 1.369)   with 1024 channels
             #print(cps_list)
 
             #move file to destination_folder
