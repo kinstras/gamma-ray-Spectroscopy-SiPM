@@ -242,29 +242,59 @@ class Gui:
             #move file to destination_folder
             shutil.move(source,self.destination_folder_path)
             
-            x1 = self.df_first_mission[5]
-            y1 = self.df_first_mission[9]
-            
-            x2 = self.df_first_mission[9]
-            y2 = self.df_first_mission[10]
+            ############# Setting variables #############
+            TEAM_ID = self.df_first_mission[0]
+            STATE = self.df_first_mission[1]
+            MEASUREMENT_ID = self.df_first_mission[2]
+            REPETITION_ID = self.df_first_mission[3]
+            MEASUREMENT_TIMESTAMP = self.df_first_mission[4]
+            MISSION_TIME = self.df_first_mission[5]
+            GPS_TIME = self.df_first_mission[6]
+            GPS_LONGITUDE = self.df_first_mission[7]
+            GPS_LATITUDE = self.df_first_mission[8]
+            ALTITUDE = self.df_first_mission[9]
+            PRESSURE = self.df_first_mission[10]
+            TEMPERATURE = self.df_first_mission[11]
+            ENERGY_PER_CHANNEL = self.df_first_mission[12]
+            ACQUITION_TIME = self.df_first_mission[13]
+            COUNTS_PER_SECOND = self.df_first_mission[14]
 
-            x3 = self.df_first_mission[7]
-            y3 = self.df_first_mission[8]
-            z3 = self.df_first_mission[9]
-
+            message = self.infoFunction(TEAM_ID,STATE,MEASUREMENT_ID,REPETITION_ID,MEASUREMENT_TIMESTAMP, MISSION_TIME, GPS_TIME, GPS_LONGITUDE, GPS_LATITUDE,ALTITUDE, PRESSURE, TEMPERATURE, ENERGY_PER_CHANNEL, ACQUITION_TIME, COUNTS_PER_SECOND)
+            print(message)
             plt.cla()
             #call plot function
-            self.refreshPlot1(x1,y1)
-            self.refreshPlot2(x2,y2)
-            self.refresh3dPlot(x3,y3,z3)
+            self.refreshPlot1(MISSION_TIME,ALTITUDE)
+            self.refreshPlot2(ALTITUDE,PRESSURE)
+            #self.refresh3dPlot(GPS_LONGITUDE,GPS_LATITUDE,ALTITUDE)
             self.refreshSpectrum(energy_list,cps_list)
             plt.tight_layout()
+            #plt.show()
             
         except IndexError:
                 print("File not found.")
         
         
-        
+       
+    def infoFunction(self, team_id, state, measurement_id, repetition_id, measurement_timestap, mission_time, gps_time,gps_longitude, gps_latitude, altitude, pressure,temperature, energy_per_channel, acquitition_time, counts_per_channel):
+        self.team_id = team_id
+        self.state = state
+        self.measurement_id = measurement_id
+        self.repetition_id = repetition_id
+        self.measurement_timestap = measurement_timestap
+        self.mission_time = mission_time
+        self.gps_time = gps_time
+        self.gps_longitude = gps_longitude
+        self.gps_latitude = gps_latitude
+        self.altitude = altitude
+        self.pressure = pressure
+        self.temperature = temperature
+        self.energy_per_channel = energy_per_channel
+        self.acquitition_time = acquitition_time
+        self.counts_per_channel = counts_per_channel
+
+        print("###################### INFO MESSAGE ######################")
+        return "Team_ID{" + str(self.team_id) + "}" 
+    
     def refreshPlot1(self,x,y):
         """
         Parses data to line1 and re-arrange axes
@@ -274,7 +304,7 @@ class Gui:
         """
         self.line1.set_data(x,y)
         ax = self.canvas.figure.axes[0]
-        ax.set_xlim(x.min(), x.max())
+        ax.set_xlim(0, x.max())
         ax.set_ylim(y.min(), y.max())        
         self.canvas.draw()
         
@@ -298,6 +328,10 @@ class Gui:
         -------
         None.
         """
+        # Setting the axes properties
+##        ax.set(xlim3d=(0, 1), xlabel='X')
+##        ax.set(ylim3d=(0, 1), ylabel='Y')
+##        ax.set(zlim3d=(0, 1), zlabel='Z')
         self.ax3.plot3D(x, y, z)[2]
         self.canvas.draw()
 
