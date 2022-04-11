@@ -160,11 +160,7 @@ class Gui:
         """
         #pass
         
-        print("on click")
-        global pause
-        pause ^= True
-        #Fig.canvas.mpl_connect('button_press_event', onClick)
-        print(pause)
+        print("on Pause")
         self.Myanimation.event_source.stop()
 
         pass
@@ -177,7 +173,7 @@ class Gui:
         """
         Continue the data acquisition
         """
-        pass
+        self.Myanimation.event_source.start()
 
     def master1(self):
         """
@@ -293,7 +289,8 @@ class Gui:
         self.counts_per_channel = counts_per_channel
 
         print("###################### INFO MESSAGE ######################")
-        return "Team_ID{" + str(self.team_id) + "}" 
+        return "{Team_ID: " + str(self.team_id) + "\n" + "state: " + str(self.team_id)+ "\n" + "measurement_id: " + str(self.measurement_id)+ "\n" + "repetition_id: " + str(self.repetition_id)+ "\n" + "measurement_timestamp: " + str(self.measurement_timestamp)+ "\n" + "mission_time: " + str(self.mission_time) + "\n" + "gps_time: " + str(self.gps_time)+ "\n" + "gps_longitude: " + str(self.gps_longitude)+ "\n" + "gps_latitude: " + str(self.gps_latitude)+ "\n" + "altitude: " + str(self.altitude)+ "\n" + "pressure: " + str(self.pressure)+ "\n" + "temperature: " + str(self.temperature)+ "\n" + "energy_per_channel: " + str(self.energy_per_channel)+ "\n" + "acquitition_time: " + str(self.acquitition_time)+ "\n" + "counts_per_channel: " + str(self.counts_per_channel)+ "}" 
+
     
     def refreshPlot1(self,x,y):
         """
