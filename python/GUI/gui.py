@@ -12,6 +12,7 @@ import os
 import shutil
 from matplotlib.animation import FuncAnimation
 from tkinter import messagebox
+import serial.tools.list_ports
 
 #global variable
 pause = False
@@ -115,6 +116,36 @@ class Gui:
         mainloop()
 
     
+    def read_serial_data(self):
+        """
+        Reads bytes from serial port and returns the package
+        """
+        
+        ports = serial.tools.list_ports.comports()
+        serialInst = serial.Serial()
+
+        portList = []
+
+        for onePort in ports:
+            portList.append(str(onePort))
+            print (str(onePort))
+
+        val = input ("select Port :") 
+
+        for x in range (0,len(portList)):
+            if portList[x].startsswith("" + str(val)):
+                portVar = ""  + str(val)
+                print(portList[x])
+
+        serialInst.baudrate = 9600
+        serialInst.port = portVar
+        serialInst.open()
+
+        while True:
+            if serialInst.in_waiting:
+                packet = serialInst.readline()
+                print(packet.decode('utf' ).rstrip('\n'))
+        return packet
     
     def askMe(self):
         """
@@ -141,7 +172,7 @@ class Gui:
         -------
         None.
         """
-        
+        packet = self.read_serial_data()
         self.flag = 0   # flag metavliti gia na mpei MONO MIA FORA stin if sinthiki
         #self.anim_running = True
         self.Myanimation = FuncAnimation(self.fig, self.plot, interval=1000,blit=False)
