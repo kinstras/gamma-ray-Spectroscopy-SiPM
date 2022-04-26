@@ -76,9 +76,10 @@ class Gui:
 
         self.ax1.set(title='Time- Altitude Plot', ylabel='Altidute [m]', xlabel='Time [sec]')
         self.ax2.set(title='Altitude- Pressure Plot', ylabel='Pressure [bar]', xlabel='Altitude [m]')
+        self.ax3.set(title='Smth- Pressure Plot', ylabel='Smth [bar]', xlabel='Altitude [m]')
 
-        self.ax3 = plt.subplot(223,projection ='3d')
-        self.ax3.set(title='3d line for altitude', ylabel='Height [m]', xlabel='Time [sec]')
+        #self.ax3 = plt.subplot(223,projection ='3d')
+        #self.ax3.set(title='3d line for altitude', ylabel='Height [m]', xlabel='Time [sec]')
 
         self.ax4 = plt.subplot(224)
         self.ax4.set(title='Gamma ray spectrum ', ylabel='Events / 1.639 keV', xlabel='Energy [keV]')
@@ -292,6 +293,8 @@ class Gui:
             #call plot function
             self.refreshPlot1(MISSION_TIME,ALTITUDE)
             self.refreshPlot2(ALTITUDE,PRESSURE)
+            self.refreshPlot3(TEMPERATURE,PRESSURE)
+         
             #self.refresh3dPlot(GPS_LONGITUDE,GPS_LATITUDE,ALTITUDE)
             self.refreshSpectrum(energy_list,cps_list)
             plt.tight_layout()
